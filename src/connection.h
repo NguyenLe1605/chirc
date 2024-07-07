@@ -4,8 +4,8 @@
  *  This module provides functions related to the chirc_connection_t struct
  *  (defined in chirc.h).
  *
- *  An instance of a chirc_connection_t struct represents an *inbound* connection
- *  into the server (i.e., a peer that has connected to the server).
+ *  An instance of a chirc_connection_t struct represents an *inbound*
+ * connection into the server (i.e., a peer that has connected to the server).
  *
  *  The peer of the connection can be either an IRC user, or another IRC server
  *  (if we are running an IRC network)
@@ -15,6 +15,16 @@
 
 #include "chirc.h"
 
+/*! \brief Initializes a new chirc_connection_t struct from a socket
+ *
+ * This function allocate the memory, create a new chirc_connection_t struct
+ * and initialize its fields.
+ *
+ * \param conn The connection to initialize
+ * \return a pointer to a connection on success, NULL on failure
+ */
+chirc_connection_t *chirc_new_connection_from_fd(int sockfd);
+
 /*! \brief Initializes a chirc_connection_t struct
  *
  * This function assumes that memory has already been allocated
@@ -23,7 +33,6 @@
  * \param conn The connection to initialize
  */
 void chirc_connection_init(chirc_connection_t *conn);
-
 
 /*! \brief Frees a chirc_connection_t struct
  *
@@ -43,7 +52,8 @@ void chirc_connection_free(chirc_connection_t *conn);
  * \param msg The message to send
  * \return 0 on success, non-zero on failure
  */
-int chirc_connection_send_message(chirc_ctx_t *ctx, chirc_connection_t *conn, chirc_message_t *msg);
+int chirc_connection_send_message(chirc_ctx_t *ctx, chirc_connection_t *conn,
+                                  chirc_message_t *msg);
 
 /*! \brief Creates a thread to handle a connection
  *
@@ -52,6 +62,5 @@ int chirc_connection_send_message(chirc_ctx_t *ctx, chirc_connection_t *conn, ch
  * \return 0 on success, non-zero on failure
  */
 int chirc_connection_create_thread(chirc_ctx_t *ctx, chirc_connection_t *conn);
-
 
 #endif /* USER_H_ */
